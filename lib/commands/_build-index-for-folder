@@ -41,7 +41,7 @@ find -s . \( -name "*.md" -o -type d \) -maxdepth 1 -print0 |
           # build folder index file
           folder_index_file="$path_absolute/index.md"
           folder_readme_file="$path_absolute/README.md"
-          possible_folder_page_file="$path_absolute/page.md"
+          possible_folder_page_file="$path_absolute/00_overview.md"
 
           index_file_init "$folder_index_file"
 

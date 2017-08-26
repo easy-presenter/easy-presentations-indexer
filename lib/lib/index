@@ -72,7 +72,7 @@ function index_name_from_path_or_page {
 
 function index_name_from_file {
   __file_to_grap_for_headline="$1"
-  
+
   __entry_name=$(cat "$__file_to_grap_for_headline" | grep "# ")
   # we have more then 2 chars, so more then '# ', use the followinf chars
   if [ ${#__entry_name} -ge 3 ];
