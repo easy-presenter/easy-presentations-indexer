@@ -11,17 +11,23 @@ www.github.com/easy-presentations/[presentation]/
   - pages
       - en
       - de
-          - page.md                      # containes the content of the start page / slide
+          - 00_overview.md               # containes the content of the start page / slide
           - index.md                     # containes the generated index
-          - README.md                    # is a combination of page.md + index.md
+          - README.md                    # is a combination of 00_overview.md + index.md
 
           - pages/*                      # containes the presentation pages / slides
+          
             - 01_overview                # is a topic
-              - page.md                  # is a topic front page / slide
+              - 00_overview.md           # is a topic front page / slide
               - 01_what_is_wordpress.md  # is a topic pages / slide
+              - index.md                 # containes the generated folder index
+              - README.md                # is a combination of 00_overview.md + index.md
+
               - 02_any_folder            # is a sub-topic
-                - page.md                # is a sub-topic front page / slide
-                - 01_nay_slide.md        # is a sub-topic page / slide
+                - 00_overview.md         # is a sub-topic front page / slide
+                - 01_any_slide.md        # is a sub-topic page / slide
+                - index.md               # containes the generated folder index
+                - README.md              # is a combination of 00_overview.md + index.md
 
 
                 [...] and so on =)
