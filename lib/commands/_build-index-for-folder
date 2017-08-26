@@ -37,6 +37,22 @@ find -s . \( -name "*.md" -o -type d \) -maxdepth 1 -print0 |
           command_exec '_build-index-for-folder' "$path_absolute" "$index_file_pages" `expr $depth + 4` "$path_relative"
 
           file_append_newline "$index_file_pages"
+
+          # build folder index file
+          folder_index_file="$path_absolute/index.md"
+          folder_readme_file="$path_absolute/README.md"
+          possible_folder_page_file="$path_absolute/page.md"
+
+          index_file_init "$folder_index_file"
+
+          command_exec '_build-index-for-folder' "$path_absolute" "$folder_index_file" 0 "."
+
+          file_clear "$folder_readme_file"
+          if [ -f "$possible_folder_page_file" ];
+          then
+            cat "$possible_folder_page_file" >> "$folder_readme_file"
+          fi
+          cat "$folder_index_file" >> "$folder_readme_file"
       fi
 
     done

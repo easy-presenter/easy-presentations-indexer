@@ -52,21 +52,34 @@ function index_name_from_path_or_page {
   __possible_folder_page="$__folder_to_scan/00_overview.md"
 
   # a README.md insite of a folder means: is the first slide
-  if [ -f "$__possible_folder_page" ];
+  if [ -f "$__folder_to_scan" ];
   then
-    __entry_name=$(cat "$__possible_folder_page" | grep "# ")
-    # we have more then 2 chars, so more then '# ', use the followinf chars
-    if [ ${#__entry_name} -ge 3 ];
-    then
-      __entry_name=${__entry_name:2}
-    else
-      # or use the path name as name
-      __entry_name=$(index_path_to_name "$__relative_path")
-    fi
+
+    __entry_name=$(index_name_from_file "$__folder_to_scan")
+
+  elif [ -f "$__possible_folder_page" ];
+  then
+
+    __entry_name=$(index_name_from_file "$__possible_folder_page")
+
   # or use the path name as name
   else
     __entry_name=$(index_path_to_name "$__relative_path")
   fi
 
   echo "$__entry_name"
+}
+
+function index_name_from_file {
+  __file_to_grap_for_headline="$1"
+  
+  __entry_name=$(cat "$__file_to_grap_for_headline" | grep "# ")
+  # we have more then 2 chars, so more then '# ', use the followinf chars
+  if [ ${#__entry_name} -ge 3 ];
+  then
+    echo ${__entry_name:2}
+  else
+    # or use the path name as name
+    echo $(index_path_to_name "$__relative_path")
+  fi
 }
