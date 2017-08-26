@@ -16,7 +16,7 @@ find -s . \( -name "*.md" -o -type d \) -maxdepth 1 -print0 |
     while IFS= read -r -d $'\0' folder; do
 
       folder=${folder:2} # strip leading ./
-      path_relative="$parent_folder$folder"
+      path_relative="$parent_folder/$folder"
       path_absolute="$source_folder/$folder"
 
       # exclude README.md, assets/, teaser.md, ./ from index
@@ -32,7 +32,9 @@ find -s . \( -name "*.md" -o -type d \) -maxdepth 1 -print0 |
       # if is directory
       if [ -d "$path_absolute" ];
       then
-          command_exec '_build-index-for-folder' "$path_absolute" "$index_file_pages" `expr $depth + 4` "$parent_folder"
+          orange "processing folder $parent_folder"
+
+          command_exec '_build-index-for-folder' "$path_absolute" "$index_file_pages" `expr $depth + 4` "$path_relative"
 
           file_append_newline "$index_file_pages"
       fi

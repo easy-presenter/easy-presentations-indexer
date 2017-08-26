@@ -27,3 +27,6 @@ www.github.com/easy-presentations/[presentation]/
                 [...] and so on =)
 
 ```
+
+### Development
+Just checkout and run `./app build` to test the generation

@@ -5,7 +5,7 @@
 source "$TERMINAL_PATH/app.bootstrap"
 
 index_file_language="$EASY_PRESENTER_SOURCE/README.md"
-parent_folder=''
+parent_folder='.'
 depth=0
 
 file_clear "$index_file_language"
