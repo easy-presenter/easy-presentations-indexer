@@ -1,0 +1,70 @@
+#!/bin/bash
+
+#lib-info: helps building the presentation index
+
+source "$TERMINAL_APP_LIB_PATH/color"
+
+function index_file_write {
+  __file="$1"
+  __depth=$2
+  __path_relative="$4"
+  __name="$3"
+
+  printf '%*s - [%s](%s) \n' $__depth ' ' "$__path_relative" "$__name" >> "$__file"
+}
+
+function index_file_init {
+  __index_file="$1"
+  __headline="$2"
+
+  file_clear "$__index_file"
+
+  if [ "x$__headline" != "x" ];
+  then
+    file_append "$__index_file" "# $__headline"
+  fi
+
+  file_append_newline "$__index_file"
+}
+
+function index_path_to_name {
+  __path="$1"
+
+  __path="${__path:3}" # cut of number and whitespace
+
+  __path=$(echo "$__path" | sed 's/[0-9]\{2\}_/ => /g')
+  __path=$(echo "$__path" | tr '_-' ' ') # eleminate _ and -
+  __path=$(echo "$__path" | tr '/' ' - ') # replace /
+
+  __path=${__path/.md/ } # strip .md ending
+
+  # uc first all words
+  __path=$(awk '{for(i=0;++i<=NF;){OFS=(i==NF)?RS:FS;printf toupper(substr($i,0,1)) substr($i,2) OFS }}' <<< "$__path")
+
+  echo "$__path"
+}
+
+function index_name_from_path_or_page {
+  __folder_to_scan="$1"
+  __relative_path="$2"
+  __possible_folder_page="$__folder_to_scan/page.md"
+
+  # a README.md insite of a folder means: is the first slide
+  if [ -f "$__possible_folder_page" ];
+  then
+    __entry_name=$(cat "$__possible_folder_page" | grep "# ")
+    # we have more then 2 chars, so more then '# ', use the followinf chars
+    if [ ${#__entry_name} -ge 3 ];
+    then
+      __entry_name=${__entry_name:2}
+    else
+      # or use the path name as name
+      __entry_name=$(index_path_to_name "$__relative_path")
+    fi
+  # or use the path name as name
+  else
+    __entry_name=$(index_path_to_name "$__relative_path")
+  fi
+
+  echo "$__entry_name"
+}

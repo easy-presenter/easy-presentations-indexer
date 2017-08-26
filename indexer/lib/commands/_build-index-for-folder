@@ -1,0 +1,42 @@
+#!/bin/bash
+
+#command-info: private
+
+source "$TERMINAL_PATH/app.bootstrap"
+
+source_folder="$1"
+index_file_pages="$2"
+depth=$3
+parent_folder="$4" # is empty in root folder
+
+cd "$source_folder"
+
+# find all folders and md files
+find -s . \( -name "*.md" -o -type d \) -maxdepth 1 -print0 |
+    while IFS= read -r -d $'\0' folder; do
+
+      folder=${folder:2} # strip leading ./
+      path_relative="$parent_folder$folder"
+      path_absolute="$source_folder/$folder"
+
+      # exclude README.md, assets/, teaser.md, ./ from index
+      files_to_jump_over=('README.md' 'index.md' 'page.md' 'assets' '')
+      case "${files_to_jump_over[@]}" in  *"$folder"*)
+          continue ;;
+      esac
+
+      entry_name=$(index_name_from_path_or_page "$path_absolute" "$path_relative")
+
+      $(index_file_write "$index_file_pages" $depth "$path_relative" "$entry_name")
+
+      # if is directory
+      if [ -d "$path_absolute" ];
+      then
+          command_exec '_build-index-for-folder' "$path_absolute" "$index_file_pages" `expr $depth + 4` "$parent_folder"
+
+          file_append_newline "$index_file_pages"
+      fi
+
+    done
+
+cd -

@@ -1,0 +1,40 @@
+#!/bin/bash
+
+#command-info: build index for the easy-presenter
+
+source "$TERMINAL_PATH/app.bootstrap"
+
+index_file_language="$EASY_PRESENTER_SOURCE/README.md"
+parent_folder=''
+depth=0
+
+file_clear "$index_file_language"
+
+index_file_init "$index_file_language" "Available languages:"
+
+for language_path in "$EASY_PRESENTER_SOURCE"/*
+do
+  # if it is a file
+  if [ -f "$language_path" ];
+  then
+    continue
+  fi
+
+  language=$(basename "$language_path")
+
+  # write language index file
+  file_append "$index_file_language" "  - [$language](./$language)"
+
+  index_file_pages="$language_path/index.md"
+
+  index_file_init "$index_file_pages"
+
+  command_exec '_build-index-for-folder' "$language_path" "$index_file_pages" $depth "$parent_folder"
+
+  # concat README.md from page.md and index.md
+  readme_language="$language_path/README.md"
+  page_language="$language_path/page.md"
+
+  cat "$page_language" > "$readme_language"
+  cat "$index_file_pages" >> "$readme_language"
+done

@@ -1,0 +1,3 @@
+# Available languages:
+
+  - [de](./de)

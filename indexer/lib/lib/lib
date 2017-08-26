@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#lib-info: helps displaying lib info
+
+function lib_print_info {
+  __command_path=$1
+  __command_name=$( basename $1 )
+  __command_info=$( cat "$__command_path" | grep 'lib-info:' )
+
+  space='                     '
+  printf "$orange %s %s ${__command_info:11:60}$color_reset\n" "$__command_name" "${space:${#__command_name}}"
+}

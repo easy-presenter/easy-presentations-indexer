@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#command-info: build index, add, commit and push this repository
+
+source app.bootstrap
+
+command_exec 'build'
+
+git add .
+git commit -m "publish"
+git push
