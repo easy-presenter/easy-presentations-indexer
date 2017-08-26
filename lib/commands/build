@@ -32,9 +32,9 @@ do
   command_exec '_build-index-for-folder' "$language_path" "$index_file_pages" $depth "$parent_folder"
 
   # concat README.md from page.md and index.md
-  readme_language="$language_path/README.md"
-  page_language="$language_path/page.md"
+  readme_for_index="$language_path/README.md"
+  teaser_for_presentation="$language_path/00_overview.md"
 
-  cat "$page_language" > "$readme_language"
-  cat "$index_file_pages" >> "$readme_language"
+  cat "$teaser_for_presentation" > "$readme_for_index"
+  cat "$index_file_pages" >> "$readme_for_index"
 done

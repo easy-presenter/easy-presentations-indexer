@@ -47,7 +47,7 @@ function index_path_to_name {
 function index_name_from_path_or_page {
   __folder_to_scan="$1"
   __relative_path="$2"
-  __possible_folder_page="$__folder_to_scan/page.md"
+  __possible_folder_page="$__folder_to_scan/00_overview.md"
 
   # a README.md insite of a folder means: is the first slide
   if [ -f "$__possible_folder_page" ];
