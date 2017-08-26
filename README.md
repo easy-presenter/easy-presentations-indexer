@@ -2,7 +2,7 @@
 
 Generates the index for a [easy-presentation](https://github.com/easy-presentations) repository.
 
-This index can by the [easy-presenter](https://easy-presenter.github.io/easy-presenter/)
+This index can be rendered as a browser slide show with: [easy-presenter](https://easy-presenter.github.io/easy-presenter/)
 
 ### required folder structure
 
