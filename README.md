@@ -16,7 +16,7 @@ www.github.com/easy-presentations/[presentation]/
           - README.md                    # is a combination of 00_overview.md + index.md
 
           - pages/*                      # containes the presentation pages / slides
-          
+
             - 01_overview                # is a topic
               - 00_overview.md           # is a topic front page / slide
               - 01_what_is_wordpress.md  # is a topic pages / slide

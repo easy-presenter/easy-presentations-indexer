@@ -2,7 +2,7 @@
 
 #command-info: build index, add, commit and push this repository
 
-source app.bootstrap
+source "$TERMINAL_PATH/app.bootstrap"
 
 command_exec 'build'
 
