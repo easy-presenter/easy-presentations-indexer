@@ -1,6 +1,13 @@
 #!/bin/bash
 
-export EASY_PRESENTER_SOURCE="$TERMINAL_PATH/../pages"
+if [ -d "$TERMINAL_PATH/../pages" ];
+then
+  # used in submodule
+  export EASY_PRESENTER_SOURCE="$TERMINAL_PATH/../pages"
+else
+  # local easy-presentation-indexer pages in main repository
+  export EASY_PRESENTER_SOURCE="$TERMINAL_PATH/pages"
+fi
 
 # set terminal app configuration
 export TERMINAL_APP_LOG_ENABLED=0
