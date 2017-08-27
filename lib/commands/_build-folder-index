@@ -20,7 +20,7 @@ find -s . \( -name "*.md" -o -type d \) -maxdepth 1 -print0 |
       path_absolute="$source_folder/$folder"
 
       # exclude README.md, assets/, teaser.md, ./ from index
-      files_to_jump_over=('README.md' 'index.md' '00_overview.md' 'assets' '')
+      files_to_jump_over=('README.md' 'index.md' 'index-topics.md' '00_overview.md' 'assets' '')
       case "${files_to_jump_over[@]}" in  *"$folder"*)
           continue ;;
       esac
@@ -34,7 +34,7 @@ find -s . \( -name "*.md" -o -type d \) -maxdepth 1 -print0 |
       then
           orange "processing folder $parent_folder"
 
-          command_exec '_build-index-for-folder' "$path_absolute" "$index_file_pages" `expr $depth + 4` "$path_relative"
+          command_exec '_build-folder-index' "$path_absolute" "$index_file_pages" `expr $depth + 4` "$path_relative"
 
           file_append_newline "$index_file_pages"
 
@@ -45,7 +45,7 @@ find -s . \( -name "*.md" -o -type d \) -maxdepth 1 -print0 |
 
           index_file_init "$folder_index_file"
 
-          command_exec '_build-index-for-folder' "$path_absolute" "$folder_index_file" 0 "."
+          command_exec '_build-folder-index' "$path_absolute" "$folder_index_file" 0 "."
 
           file_clear "$folder_readme_file"
           if [ -f "$possible_folder_page_file" ];

@@ -26,10 +26,12 @@ do
   file_append "$index_file_language" "  - [$language](./$language)"
 
   index_file_pages="$language_path/index.md"
+  index_file_topics="$language_path/index-topics.md"
 
   index_file_init "$index_file_pages"
 
-  command_exec '_build-index-for-folder' "$language_path" "$index_file_pages" $depth "$parent_folder"
+  command_exec '_build-folder-index' "$language_path" "$index_file_pages" $depth "$parent_folder"
+  command_exec '_build-topic-index' "$language_path" "$index_file_topics" "$parent_folder"
 
   # concat README.md from page.md and index.md
   readme_for_index="$language_path/README.md"
