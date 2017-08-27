@@ -10,6 +10,8 @@ parent_folder="$4" # is empty in root folder
 
 cd "$source_folder"
 
+file_clear "$index_file_topics"
+
 # find all folders and md files
 find -s . \( -name "*.md" -o -type d \) -maxdepth 1 -print0 |
     while IFS= read -r -d $'\0' folder; do
