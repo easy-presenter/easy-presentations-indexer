@@ -1,12 +1,12 @@
 #!/bin/bash
 
-if [ -d "$TERMINAL_PATH/../pages" ];
+if [ -d "$TERMINAL_PATH/../tracks" ];
 then
   # used in submodule
-  export EASY_PRESENTER_SOURCE="$TERMINAL_PATH/../pages"
+  export EASY_PRESENTER_SOURCE="$TERMINAL_PATH/../tracks"
 else
   # local easy-presentation-indexer pages in main repository
-  export EASY_PRESENTER_SOURCE="$TERMINAL_PATH/pages"
+  export EASY_PRESENTER_SOURCE="$TERMINAL_PATH/tracks"
 fi
 
 # set terminal app configuration

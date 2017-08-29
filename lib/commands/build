@@ -4,41 +4,49 @@
 
 source "$TERMINAL_PATH/app.bootstrap"
 
-index_file_language="$EASY_PRESENTER_SOURCE/README.md"
+index_file_presentations="$EASY_PRESENTER_SOURCE/README.md"
 parent_folder='.'
 depth=0
 
-file_clear "$index_file_language"
+file_clear "$index_file_presentations"
 
-index_file_init "$index_file_language" "Available languages:"
+index_file_init "$index_file_presentations" "Presentations:"
 
-for language_path in "$EASY_PRESENTER_SOURCE"/*
+for presentations_path in "$EASY_PRESENTER_SOURCE"/*
 do
   # if it is a file
-  if [ -f "$language_path" ];
+  if [ -f "$presentations_path" ];
   then
     continue
   fi
 
-  language=$(basename "$language_path")
+  presentations_path_relative=$(basename "$presentations_path")
 
-  # write language index file
-  file_append "$index_file_language" "  - [$language](./$language)"
+  possible_presentation_teaser_file="$presentations_path/00_index/00_teaser.md"
+  if [ -f "$possible_presentation_teaser_file" ];
+  then
+    presentation_name=$(index_name_from_file "$possible_presentation_teaser_file")
+  else
+    presentation_name=$(index_path_to_name "$presentations_path")
+  fi
 
-  index_file_pages="$language_path/index.md"
+  # write presentation index file
+  file_append "$index_file_presentations" "  - [$presentation_name](./$presentations_path_relative)"
 
-  mkdir -p "$language_path/00_index/"
-  teaser_for_presentation="$language_path/00_index/01_teaser.md"
-  index_file_topics="$language_path/00_index/02_topics.md"
+  index_file_pages="$presentations_path/index.md"
+
+  mkdir -p "$presentations_path/00_index/"
+  teaser_for_presentation="$presentations_path/00_index/00_teaser.md"
+  index_file_topics="$presentations_path/00_index/01_topics.md"
 
   index_file_init "$index_file_pages"
-  command_exec '_build-folder-index' "$language_path" "$index_file_pages" $depth "$parent_folder"
+  command_exec '_build-folder-index' "$presentations_path" "$index_file_pages" $depth "$parent_folder"
 
   index_file_init "$index_file_topics" 'Topics'
-  command_exec '_build-topic-index' "$language_path" "$index_file_topics" "$parent_folder"
+  command_exec '_build-track-index' "$presentations_path" "$index_file_topics" "$parent_folder"
 
   # concat README.md from page.md and index.md
-  readme_for_index="$language_path/README.md"
+  readme_for_index="$presentations_path/README.md"
 
   cat "$teaser_for_presentation" > "$readme_for_index"
   cat "$index_file_pages" >> "$readme_for_index"

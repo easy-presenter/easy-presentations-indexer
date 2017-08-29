@@ -19,14 +19,15 @@ find -s . \( -name "*.md" -o -type d \) -maxdepth 1 -print0 |
       path_absolute="$source_folder/$folder"
 
       # exclude README.md, assets/, teaser.md, ./ from index
-      files_to_jump_over=('README.md' 'index.md' '00_index' '00_overview.md' 'assets' '')
+      files_to_jump_over=('README.md' 'index.md' '')
       case "${files_to_jump_over[@]}" in  *"$folder"*)
           continue ;;
       esac
 
+      # write track index file
       entry_name=$(index_name_from_path_or_page "$path_absolute" "$path_relative")
 
       file_append "$index_file_topics" "  - $entry_name"
-    done
 
+    done
 cd -
