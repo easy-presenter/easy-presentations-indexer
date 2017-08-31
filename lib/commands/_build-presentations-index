@@ -34,7 +34,7 @@ find -s . \( -name "*.md" -o -type d \) -maxdepth 1 -print0 |
       then
           orange "processing folder $path_relative"
 
-          command_exec '_build-presentation-index' "$path_absolute" "$index_file_topics" `expr $depth + 4` "$path_relative"
+          command_exec '_build-presentations-index' "$path_absolute" "$index_file_topics" `expr $depth + 4` "$path_relative"
 
           file_append_newline "$index_file_topics"
 
