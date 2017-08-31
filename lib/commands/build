@@ -43,10 +43,10 @@ do
   index_file_topics="$presentations_path/00_index/01_topics.md"
 
   index_file_init "$index_file_topics" 'Topics'
-  command_exec '_build-track-index' "$presentations_path" "$index_file_topics" "$parent_folder"
+  ./app _build-presentation-index "$presentations_path" "$index_file_topics" "$parent_folder"
 
   index_file_init "$index_file_pages"
-  command_exec '_build-folder-index' "$presentations_path" "$index_file_pages" $depth "$parent_folder"
+  ./app _build-presentations-index "$presentations_path" "$index_file_pages" $depth "$parent_folder"
 
   # concat README.md from page.md and index.md
   readme_for_index="$presentations_path/README.md"

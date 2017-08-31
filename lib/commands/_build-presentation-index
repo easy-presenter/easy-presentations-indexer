@@ -19,7 +19,7 @@ find -s . \( -name "*.md" -o -type d \) -maxdepth 1 -print0 |
       path_absolute="$source_folder/$folder"
 
       # exclude README.md, assets/, teaser.md, ./ from index
-      files_to_jump_over=('README.md' 'index.md' '')
+      files_to_jump_over=('README.md' 'index.md' '00_index')
       case "${files_to_jump_over[@]}" in  *"$folder"*)
           continue ;;
       esac
