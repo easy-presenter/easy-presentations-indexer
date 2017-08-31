@@ -12,7 +12,7 @@ depth=0
 file_clear "$index_file_presentations"
 file_clear "$readme_file_presentations"
 
-index_file_init "$readme_file_presentations" "Presentations:"
+index_file_init "$readme_file_presentations" "Präsentationen:"
 
 for presentations_path in "$EASY_PRESENTER_SOURCE"/*
 do
@@ -43,10 +43,10 @@ do
   index_file_topics="$presentations_path/00_index/01_topics.md"
 
   index_file_init "$index_file_topics" 'Topics'
-  ./app _build-presentation-index "$presentations_path" "$index_file_topics" "$parent_folder"
+  command_exec '_build-presentation-index' "$presentations_path" "$index_file_topics" "$parent_folder"
 
   index_file_init "$index_file_pages"
-  ./app _build-presentations-index "$presentations_path" "$index_file_pages" $depth "$parent_folder"
+  command_exec '_build-presentations-index' "$presentations_path" "$index_file_pages" $depth "$parent_folder"
 
   # concat README.md from page.md and index.md
   readme_for_index="$presentations_path/README.md"
