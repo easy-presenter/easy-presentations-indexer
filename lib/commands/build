@@ -4,53 +4,55 @@
 
 source "$TERMINAL_PATH/app.bootstrap"
 
-index_file_presentations="$EASY_PRESENTER_SOURCE/index.md"
+presentation_index_files="$EASY_PRESENTER_SOURCE/index.md"
 readme_file_presentations="$EASY_PRESENTER_SOURCE/README.md"
 parent_folder='.'
 depth=0
 
-file_clear "$index_file_presentations"
+file_clear "$presentation_index_files"
 file_clear "$readme_file_presentations"
 
 index_file_init "$readme_file_presentations" "Präsentationen:"
 
-for presentations_path in "$EASY_PRESENTER_SOURCE"/*
+for presentation_path in "$EASY_PRESENTER_SOURCE"/*
 do
   # if it is a file
-  if [ -f "$presentations_path" ];
+  if [ -f "$presentation_path" ];
   then
     continue
   fi
 
-  presentations_path_relative=$(basename "$presentations_path")
+  presentation_path_relative=$(basename "$presentation_path")
 
-  possible_presentation_teaser_file="$presentations_path/00_index/00_teaser.md"
+  possible_presentation_teaser_file="$presentation_path/00_index/00_teaser.md"
   if [ -f "$possible_presentation_teaser_file" ];
   then
     presentation_name=$(index_name_from_file "$possible_presentation_teaser_file")
   else
-    presentation_name=$(index_path_to_name "$presentations_path")
+    presentation_name=$(index_path_to_name "$presentation_path")
   fi
 
   # write presentation index file
-  file_append "$index_file_presentations" "  - [$presentation_name](./$presentations_path_relative)"
-  file_append "$readme_file_presentations" "  - [$presentation_name](./$presentations_path_relative)"
+  file_append "$presentation_index_files" "  - [$presentation_name](./$presentation_path_relative)"
 
-  index_file_pages="$presentations_path/index.md"
+  presentation_pdf_file_name=$(file_name_to_path "cw-wordpress-$presentation_path_relative.pdf")
+  file_append "$readme_file_presentations" "  - [$presentation_name](./$presentation_path_relative) [als PDF herunterladen](./$presentation_path_relative/$presentation_pdf_file_name)"
 
-  mkdir -p "$presentations_path/00_index/"
-  teaser_for_presentation="$presentations_path/00_index/00_teaser.md"
-  index_file_topics="$presentations_path/00_index/01_topics.md"
+  presentation_index_file="$presentation_path/index.md"
 
-  index_file_init "$index_file_topics" 'Topics'
-  command_exec '_build-presentation-index' "$presentations_path" "$index_file_topics" "$parent_folder"
+  mkdir -p "$presentation_path/00_index/"
+  presentation_teaser_file="$presentation_path/00_index/00_teaser.md"
+  index_file_topics="$presentation_path/00_index/01_topics.md"
 
-  index_file_init "$index_file_pages"
-  command_exec '_build-presentations-index' "$presentations_path" "$index_file_pages" $depth "$parent_folder"
+  index_file_init "$index_file_topics" 'Kapitelübersicht'
+  command_exec '_build-chapter-index' "$presentation_path" "$index_file_topics" "$parent_folder"
+
+  index_file_init "$presentation_index_file"
+  command_exec '_build-folder-index' "$presentation_path" "$presentation_index_file" $depth "$parent_folder"
 
   # concat README.md from page.md and index.md
-  readme_for_index="$presentations_path/README.md"
+  presentation_readme_file="$presentation_path/README.md"
 
-  cat "$teaser_for_presentation" > "$readme_for_index"
-  cat "$index_file_pages" >> "$readme_for_index"
+  cat "$presentation_teaser_file" > "$presentation_readme_file"
+  cat "$presentation_index_file" >> "$presentation_readme_file"
 done

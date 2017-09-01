@@ -45,7 +45,7 @@ function index_name_from_path_or_page {
 
   # or use the path name as name
   else
-    __entry_name=$(index_path_to_name "$__relative_path")
+    __entry_name=$(file_path_to_name "$__relative_path")
   fi
 
   echo "$__entry_name"
@@ -61,25 +61,14 @@ function index_name_from_file {
     echo ${__entry_name:2}
   else
     # or use the path name as name
-    echo $(index_path_to_name "$__relative_path")
+    echo $(file_path_to_name "$__relative_path")
   fi
 }
 
-function index_path_to_name {
+function index_path_to_name(){
   __path="$1"
 
-  __path=$( echo $(basename "$__path") ) # use last segment
-
-  __path="${__path:3}" # cut of number and whitespace
-
-  __path=$(echo "$__path" | sed 's/[0-9]\{2\}_/ => /g')
-  __path=$(echo "$__path" | tr '_-' ' ') # eleminate _ and -
-  __path=$(echo "$__path" | tr '/' ' - ') # replace /
-
-  __path=${__path/.md/ } # strip .md ending
-
-  # uc first all words
-  __path=$(awk '{for(i=0;++i<=NF;){OFS=(i==NF)?RS:FS;printf toupper(substr($i,0,1)) substr($i,2) OFS }}' <<< "$__path")
+  __path=$(echo "$(file_path_to_name $__path)" | sed 's/[0-9]\{2\}_/ => /g')
 
   echo "$__path"
 }

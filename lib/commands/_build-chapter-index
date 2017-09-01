@@ -28,6 +28,5 @@ find -s . \( -name "*.md" -o -type d \) -maxdepth 1 -print0 |
       entry_name=$(index_name_from_path_or_page "$path_absolute" "$path_relative")
 
       file_append "$index_file_topics" "  - $entry_name"
-
     done
 cd -
