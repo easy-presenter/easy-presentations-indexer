@@ -29,7 +29,7 @@ do
   then
     presentation_name=$(index_name_from_file "$possible_presentation_teaser_file")
   else
-    presentation_name=$(index_path_to_name "$presentation_path")
+    presentation_name=$(file_path_to_name "$presentation_path")
   fi
 
   # write presentation index file
