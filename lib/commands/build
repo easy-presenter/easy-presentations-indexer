@@ -5,14 +5,17 @@
 source "$TERMINAL_PATH/app.bootstrap"
 
 presentation_index_files="$EASY_PRESENTER_SOURCE/index.md"
+pdf_index_file="$EASY_PRESENTER_SOURCE/index-pdfs.md"
 readme_file_presentations="$EASY_PRESENTER_SOURCE/README.md"
 parent_folder='.'
 depth=0
 
 file_clear "$presentation_index_files"
 file_clear "$readme_file_presentations"
+file_clear "$pdf_index_file"
 
 index_file_init "$readme_file_presentations" "Präsentationen:"
+index_file_init "$pdf_index_file" "Präsentationen:"
 
 for presentation_path in "$EASY_PRESENTER_SOURCE"/*
 do
@@ -35,8 +38,11 @@ do
   # write presentation index file
   file_append "$presentation_index_files" "  - [$presentation_name](./$presentation_path_relative)"
 
+  file_append "$readme_file_presentations" "  - [$presentation_name](./$presentation_path_relative)"
+
   presentation_pdf_file_name=$(file_name_to_path "cw-wordpress-$presentation_path_relative.pdf")
-  file_append "$readme_file_presentations" "  - [$presentation_name](./$presentation_path_relative) [als PDF herunterladen](./$presentation_path_relative/$presentation_pdf_file_name)"
+  file_append "$pdf_index_file" "  - [$presentation_name (pdf)](./$presentation_path_relative/$presentation_pdf_file_name)"
+
 
   presentation_index_file="$presentation_path/index.md"
 
